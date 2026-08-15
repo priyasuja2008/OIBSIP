@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Car Price Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="hero">
+
+        <div class="hero-content">
+
+            <span class="badge">MACHINE LEARNING</span>
+
+            <h1>Car Price<br><span>Prediction</span></h1>
+
+            <p>
+                Predict the estimated selling price of a used car
+                using machine learning.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Enter Car Details</h2>
+
+        <p class="subtitle">
+            Fill in the details below to estimate the selling price.
+        </p>
+
+
+        <form action="/predict" method="POST">
+
+
+            <!-- Car Information -->
+
+            <div class="section-title">
+                Car Information
+            </div>
+
+            <div class="form-grid">
+
+                <div class="input-group">
+                    <label>Car Name</label>
+
+                    <input
+                        type="text"
+                        name="car_name"
+                        placeholder="Example: Maruti Swift"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Brand</label>
+
+                    <input
+                        type="text"
+                        name="brand"
+                        placeholder="Example: Maruti"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Model</label>
+
+                    <input
+                        type="text"
+                        name="model"
+                        placeholder="Example: Swift VXI"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Vehicle Age (Years)</label>
+
+                    <input
+                        type="number"
+                        name="vehicle_age"
+                        min="0"
+                        step="1"
+                        placeholder="Example: 5"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Minimum Cost Price</label>
+
+                    <input
+                        type="number"
+                        name="min_cost_price"
+                        min="0"
+                        step="0.01"
+                        placeholder="Example: 5.5"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Maximum Cost Price</label>
+
+                    <input
+                        type="number"
+                        name="max_cost_price"
+                        min="0"
+                        step="0.01"
+                        placeholder="Example: 8.0"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Kilometers Driven</label>
+
+                    <input
+                        type="number"
+                        name="km_driven"
+                        min="0"
+                        placeholder="Example: 45000"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Number of Seats</label>
+
+                    <input
+                        type="number"
+                        name="seats"
+                        min="1"
+                        step="1"
+                        placeholder="Example: 5"
+                        required>
+                </div>
+
+            </div>
+
+
+            <!-- Vehicle Specifications -->
+
+            <div class="section-title">
+                Vehicle Specifications
+            </div>
+
+            <div class="form-grid">
+
+                <div class="input-group">
+                    <label>Seller Type</label>
+
+                    <select name="seller_type" required>
+
+                        <option value="">
+                            Select Seller Type
+                        </option>
+
+                        <option value="Dealer">
+                            Dealer
+                        </option>
+
+                        <option value="Individual">
+                            Individual
+                        </option>
+
+                        <option value="Trustmark Dealer">
+                            Trustmark Dealer
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Fuel Type</label>
+
+                    <select name="fuel_type" required>
+
+                        <option value="">
+                            Select Fuel Type
+                        </option>
+
+                        <option value="Petrol">
+                            Petrol
+                        </option>
+
+                        <option value="Diesel">
+                            Diesel
+                        </option>
+
+                        <option value="CNG">
+                            CNG
+                        </option>
+
+                        <option value="LPG">
+                            LPG
+                        </option>
+
+                        <option value="Electric">
+                            Electric
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Transmission</label>
+
+                    <select name="transmission_type" required>
+
+                        <option value="">
+                            Select Transmission
+                        </option>
+
+                        <option value="Manual">
+                            Manual
+                        </option>
+
+                        <option value="Automatic">
+                            Automatic
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Mileage</label>
+
+                    <input
+                        type="number"
+                        name="mileage"
+                        min="0"
+                        step="0.01"
+                        placeholder="Example: 20.4"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Engine (CC)</label>
+
+                    <input
+                        type="number"
+                        name="engine"
+                        min="0"
+                        step="1"
+                        placeholder="Example: 1197"
+                        required>
+                </div>
+
+
+                <div class="input-group">
+                    <label>Max Power</label>
+
+                    <input
+                        type="number"
+                        name="max_power"
+                        min="0"
+                        step="0.01"
+                        placeholder="Example: 88.5"
+                        required>
+                </div>
+
+            </div>
+
+
+            <button type="submit">
+                Predict Car Price
+                <span>→</span>
+            </button>
+
+        </form>
+
+
+        {% if prediction is defined %}
+
+        <div class="prediction">
+
+            <div class="prediction-label">
+                ESTIMATED SELLING PRICE
+            </div>
+
+            <div class="price">
+                ₹ {{ "{:,.2f}".format(prediction) }}
+            </div>
+
+            <p>
+                Based on the details provided and the trained
+                machine learning model.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <footer>
+        Car Price Prediction • Machine Learning Project
+    </footer>
+
+</div>
+
+</body>
+</html>

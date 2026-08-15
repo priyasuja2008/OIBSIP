@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Prediction</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>📈 Sales Prediction</h1>
+
+        <p class="subtitle">
+            Predict Product Sales based on Advertising Budget
+        </p>
+
+        <form action="/predict" method="POST">
+
+            <div class="input-box">
+
+                <label>📺 TV Advertising</label>
+
+                <input
+                    type="number"
+                    name="tv"
+                    step="0.01"
+                    placeholder="Enter TV Advertisement Cost"
+                    required>
+
+            </div>
+
+
+            <div class="input-box">
+
+                <label>📻 Radio Advertising</label>
+
+                <input
+                    type="number"
+                    name="radio"
+                    step="0.01"
+                    placeholder="Enter Radio Advertisement Cost"
+                    required>
+
+            </div>
+
+
+            <div class="input-box">
+
+                <label>📰 Newspaper Advertising</label>
+
+                <input
+                    type="number"
+                    name="newspaper"
+                    step="0.01"
+                    placeholder="Enter Newspaper Advertisement Cost"
+                    required>
+
+            </div>
+
+
+            <button type="submit">
+
+                Predict Sales
+
+            </button>
+
+        </form>
+
+
+        {% if prediction %}
+
+        <div class="result">
+
+            <h2>Predicted Sales</h2>
+
+            <h1>{{ prediction }}</h1>
+
+        </div>
+
+        {% endif %}
+
+
+        {% if error %}
+
+        <div class="error">
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
